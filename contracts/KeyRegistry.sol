@@ -12,8 +12,11 @@ contract VerifiableKeyRegistry is IKeyRegistry, AdminManaged {
 
     mapping(bytes32 => Key) public keys;
 
-    constructor(string memory _ownerDomain) {
+    constructor(string memory _ownerDomain, address[] memory _admins) {
         ownerDomain = _ownerDomain;
+        for (uint256 i = 0; i < _admins.length; i++) {
+            admins[_admins[i]] = true;
+        }
     }
 
     function registerKey(Key memory key) public onlyAdmin {
